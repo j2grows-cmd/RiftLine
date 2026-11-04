@@ -3,7 +3,7 @@ name: Deploy Riftline to GitHub Pages
 on:
   push:
     branches:
-      - feature/riot-analytics-dashboard
+      - main
   workflow_dispatch:
 
 permissions:
