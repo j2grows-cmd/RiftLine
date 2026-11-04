@@ -214,6 +214,25 @@ button:focus-visible,[role="button"]:focus-visible,input:focus-visible,select:fo
 .rank-emblem span{font:26px Georgia,serif;text-shadow:0 2px 8px #000;letter-spacing:-.04em}
 .rank{padding:13px 14px;min-height:84px}.rank-copy strong{letter-spacing:.01em}.rank-copy small{line-height:1.6}.lp{font-size:20px}
 @media(max-width:560px){.rank-emblem{flex-basis:48px;width:48px;height:48px}.rank-emblem span{font-size:23px}}
+
+.comparison{margin:18px 0 24px;padding:20px;background:linear-gradient(145deg,#182333,#101620);border-color:#39475c;box-shadow:inset 0 1px #ffffff0a,0 14px 35px #0003}
+.comparison .section-title{margin:0 0 16px}.compare-controls{display:flex;align-items:end;gap:14px;flex-wrap:wrap}
+.compare-controls label{display:grid;gap:6px;color:#aeb9c9;font-size:10px;letter-spacing:.12em;text-transform:uppercase}
+.compare-controls select,.compare-controls input{min-width:210px;background:#090e16;color:var(--text);border:1px solid #39475c;border-radius:8px;padding:10px 12px}
+.compare-dates{display:flex;gap:8px;flex-wrap:wrap}.compare-dates[hidden]{display:none}
+.compare-coverage{margin-left:auto;color:#8795a9;font-size:10px;letter-spacing:.04em}
+.compare-periods{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:17px}
+.compare-period{padding:14px;border:1px solid #303d51;border-radius:10px;background:linear-gradient(145deg,#151f2d,#101620)}
+.compare-period.current{border-color:#8b754c88}.compare-period h4{margin:0 0 5px;color:#d9bd84;font:16px Georgia,serif}
+.compare-period p{margin:0;color:#8f9caf;font-size:10px}
+.compare-period strong{display:block;font:27px Georgia,serif;margin-top:8px}
+.compare-metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;margin-top:12px}
+.compare-metric{padding:11px;border:1px solid #2c394c;border-radius:9px;background:#0e151f}
+.compare-metric span{display:block;color:#8e9bad;font-size:9px;letter-spacing:.12em;text-transform:uppercase}
+.compare-metric strong{display:block;margin-top:5px;font-size:17px}
+.compare-metric small{display:block;margin-top:3px;color:#8e9bad;font-size:10px}
+.compare-metric .positive{color:#65d2a4}.compare-metric .negative{color:#ef858d}.compare-champions{margin-top:12px;color:#9aa7b8;font-size:11px}
+@media(max-width:700px){.compare-periods{grid-template-columns:1fr}.compare-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.compare-coverage{margin-left:0;width:100%}}
 </style>
 </head>
 <body><main class="shell">
@@ -224,7 +243,17 @@ button:focus-visible,[role="button"]:focus-visible,input:focus-visible,select:fo
 <section class="dashboard" id="dashboard">
 <div class="profile"><img class="avatar" id="avatar" alt="Player profile icon"><div class="player-name"><h3 id="player-title">Player</h3><p id="player-subtitle">Summoner profile</p></div><div class="level">Summoner level<strong id="player-level">—</strong></div></div>
 <div class="grid"><article class="card"><div class="stat-label">Solo / Duo win rate</div><div class="stat-value" id="winrate">—</div><div class="stat-sub" id="record">No ranked data</div></article><article class="card"><div class="stat-label">Ranked tier</div><div class="stat-value" id="rank">—</div><div class="stat-sub" id="lp">Solo / Duo queue</div></article><article class="card"><div class="stat-label">Recent KDA</div><div class="stat-value" id="kda">—</div><div class="stat-sub" id="kda-sub">Last 10 matches</div></article><article class="card"><div class="stat-label">Recent win rate</div><div class="stat-value" id="recent-winrate">—</div><div class="stat-sub" id="recent-record">Last 10 matches</div></article></div>
-<div class="columns"><section><div class="section-title"><h3>Ranked profile</h3><span>Current season</span></div><div class="card rank-list" id="rank-list"><div class="empty">Ranked information will appear here.</div></div></section><section><div class="section-title"><h3>Top champions</h3><span>Recent matches</span></div><div class="card champ-list" id="champ-list"><div class="empty">Champion insights will appear here.</div></div></section></div>
+<section class="comparison card" id="comparison">
+ <div class="section-title"><h3>Performance comparison</h3><span>Compare your progress</span></div>
+ <div class="compare-controls">
+  <label>Comparison period<select id="compare-period"><option value="games5">Last 5 games vs previous 5</option><option value="games10" selected>Last 10 games vs previous 10</option><option value="games20">Last 20 games vs previous 20</option><option value="week">This week vs last week</option><option value="month">This month vs last month</option><option value="quarter">Last 3 months vs previous 3 months</option><option value="custom">Custom date range</option></select></label>
+  <div class="compare-dates" id="compare-dates" hidden><label>From<input type="date" id="compare-from"></label><label>To<input type="date" id="compare-to"></label></div>
+  <div class="compare-coverage" id="compare-coverage">Comparing your recent performance</div>
+ </div>
+ <div class="compare-periods" id="compare-periods"></div>
+ <div class="compare-metrics" id="compare-metrics"></div>
+ <div class="compare-champions" id="compare-champions"></div>
+</section><div class="columns"><section><div class="section-title"><h3>Ranked profile</h3><span>Current season</span></div><div class="card rank-list" id="rank-list"><div class="empty">Ranked information will appear here.</div></div></section><section><div class="section-title"><h3>Top champions</h3><span>Recent matches</span></div><div class="card champ-list" id="champ-list"><div class="empty">Champion insights will appear here.</div></div></section></div>
 <div class="section-title"><h3>Recent matches</h3><span id="match-caption">Match history · Latest 10</span></div><div class="matches" id="matches"><div class="empty">Search for a player to load match history.</div></div>
 </section>
 <div class="report-backdrop" id="report-backdrop" role="dialog" aria-modal="true" aria-labelledby="report-title"><div class="report"><header class="report-head"><div><h2 id="report-title">Match report</h2><p id="report-subtitle">Complete match breakdown</p></div><button class="report-close" id="report-close" type="button">Close ✕</button></header><div class="report-body" id="report-content"><div class="report-loading">Select a match to inspect every available statistic.</div></div></div></div>
