@@ -59,7 +59,7 @@ Deno.serve(async (req) => {
     // Fetch one match and its timeline on demand when a user opens a match report.
     if (typeof body.matchId === "string") {
       const matchId = body.matchId.trim();
-      if (!/^[A-Z0-9]+_\\d+$/.test(matchId) || matchId.length > 64) {
+      if (!/^[A-Z0-9]+_\d+$/.test(matchId) || matchId.length > 64) {
         return json({ error: "Invalid match identifier." }, 400);
       }
       const regionHost = `https://${routing}.api.riotgames.com`;
