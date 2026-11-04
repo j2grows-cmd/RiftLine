@@ -52,16 +52,33 @@ Deno.serve(async (req) => {
 
   try {
     const body = await req.json();
-    const riotId = typeof body.riotId === "string" ? body.riotId.trim() : "";
     const platform = typeof body.platform === "string" ? body.platform.toUpperCase() : "EUW1";
-    const matchCount = Math.min(10, Math.max(1, Number.isInteger(body.matchCount) ? body.matchCount : 10));
+    const routing = platformRouting[platform];
+    if (!routing) return json({ error: "Unsupported server selection." }, 400);
+
+    // Fetch one match and its timeline on demand when a user opens a match report.
+    if (typeof body.matchId === "string") {
+      const matchId = body.matchId.trim();
+      if (!/^[A-Z0-9]+_\\d+$/.test(matchId) || matchId.length > 64) {
+        return json({ error: "Invalid match identifier." }, 400);
+      }
+      const regionHost = `https://${routing}.api.riotgames.com`;
+      const match = await riotGet(`${regionHost}/lol/match/v5/matches/${safeSegment(matchId)}`, apiKey);
+      let timeline = null;
+      try {
+        timeline = await riotGet(`${regionHost}/lol/match/v5/matches/${safeSegment(matchId)}/timeline`, apiKey);
+      } catch (timelineError) {
+        console.warn("Match timeline unavailable:", timelineError);
+      }
+      return json({ match, timeline, retrievedAt: new Date().toISOString() });
+    }
+
+    const riotId = typeof body.riotId === "string" ? body.riotId.trim() : "";
+    const matchCount = Math.min(20, Math.max(1, Number.isInteger(body.matchCount) ? body.matchCount : 10));
     const splitAt = riotId.lastIndexOf("#");
     if (splitAt < 1 || splitAt === riotId.length - 1 || riotId.length > 64) {
       return json({ error: "Enter a Riot ID in GameName#TAG format." }, 400);
     }
-    const routing = platformRouting[platform];
-    if (!routing) return json({ error: "Unsupported server selection." }, 400);
-
     const gameName = riotId.slice(0, splitAt);
     const tagLine = riotId.slice(splitAt + 1);
     const account = await riotGet(
