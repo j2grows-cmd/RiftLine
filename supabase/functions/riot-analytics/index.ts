@@ -95,11 +95,24 @@ Deno.serve(async (req) => {
       riotGet(`https://${routing}.api.riotgames.com/lol/match/v5/matches/by-puuid/${safeSegment(puuid)}/ids?start=0&count=${matchCount}`, apiKey),
     ]);
 
-    const matches = await Promise.all(
-      (Array.isArray(matchIds) ? matchIds : []).map((id: string) =>
-        riotGet(`https://${routing}.api.riotgames.com/lol/match/v5/matches/${safeSegment(id)}`, apiKey)
-      ),
-    );
+    // Riot development keys have a rolling request limit. Do not burst-fetch
+    // all 20 match payloads concurrently; pace requests to avoid HTTP 429s.
+    const ids: string[] = Array.isArray(matchIds) ? matchIds : [];
+    const matches: unknown[] = [];
+    const concurrency = 2;
+    let nextIndex = 0;
+    async function matchWorker() {
+      while (nextIndex < ids.length) {
+        const index = nextIndex++;
+        if (index > 0) await new Promise((resolve) => setTimeout(resolve, 600));
+        const id = ids[index];
+        matches[index] = await riotGet(
+          `https://${routing}.api.riotgames.com/lol/match/v5/matches/${safeSegment(id)}`,
+          apiKey,
+        );
+      }
+    }
+    await Promise.all(Array.from({ length: Math.min(concurrency, ids.length) }, () => matchWorker()));
 
     return json({
       account: { ...account, puuid },
