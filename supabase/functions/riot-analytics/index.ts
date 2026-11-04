@@ -74,7 +74,7 @@ Deno.serve(async (req) => {
     }
 
     const riotId = typeof body.riotId === "string" ? body.riotId.trim() : "";
-    const matchCount = Math.min(20, Math.max(1, Number.isInteger(body.matchCount) ? body.matchCount : 10));
+    const matchCount = Math.min(50, Math.max(1, Number.isInteger(body.matchCount) ? body.matchCount : 10));
     const splitAt = riotId.lastIndexOf("#");
     if (splitAt < 1 || splitAt === riotId.length - 1 || riotId.length > 64) {
       return json({ error: "Enter a Riot ID in GameName#TAG format." }, 400);
@@ -96,7 +96,7 @@ Deno.serve(async (req) => {
     ]);
 
     // Riot development keys have a rolling request limit. Do not burst-fetch
-    // all 20 match payloads concurrently; pace requests to avoid HTTP 429s.
+    // all match payloads concurrently; pace requests to reduce HTTP 429s.
     const ids: string[] = Array.isArray(matchIds) ? matchIds : [];
     const matches: unknown[] = [];
     const concurrency = 2;
