@@ -29,7 +29,7 @@ From the project root, link the Supabase project and deploy:
 
 ```sh
 supabase login
-supabase link --project-ref lwaxzivcjzpmmantryor
+supabase link --project-ref mswdpouenugeprkatkfw
 supabase functions deploy riot-analytics
 ```
 
@@ -39,7 +39,7 @@ The function is intentionally callable by the public dashboard and validates req
 
 The frontend is the root `index.html`. Enable GitHub Pages for the deployment branch or publish the file through your preferred static host. The dashboard calls:
 
-`https://lwaxzivcjzpmmantryor.supabase.co/functions/v1/riot-analytics`
+`https://mswdpouenugeprkatkfw.supabase.co/functions/v1/riot-analytics`
 
 The Supabase publishable key in the frontend is designed for public client use; it is not a substitute for server-side authorization or rate limiting.
 
