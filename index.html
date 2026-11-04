@@ -1,233 +1,58 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#090d0b">
-<title>J2Grows — Botanical Genetics Lab</title>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#090b10">
+<title>Riftline — League Analytics</title>
 <style>
-:root{color-scheme:dark;--gold:#d9bd72;--gold-light:#f2df9e;--olive:#788c45;--ink:#080b09;--panel:rgba(11,15,12,.82);--muted:#b9b6a8}
-*{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:Georgia,"Times New Roman",serif;background:#080b09;color:#f3eee0}
-body{min-height:100vh;overflow:hidden}
-.scene{position:relative;isolation:isolate;display:grid;place-items:center;min-height:100vh;min-height:100svh;padding:36px 20px;background:#08100b}
-.scene:before{content:"";position:absolute;inset:0;z-index:-2;background-image:linear-gradient(90deg,rgba(3,7,5,.12) 0%,rgba(3,7,5,.42) 22%,rgba(3,7,5,.76) 42%,rgba(3,7,5,.72) 58%,rgba(3,7,5,.36) 82%,rgba(3,7,5,.12) 100%),linear-gradient(0deg,rgba(3,6,4,.82),rgba(3,6,4,.08) 42%,rgba(2,5,4,.2)),url("https://lwaxzivcjzpmmantryor.supabase.co/storage/v1/object/public/Artwork/banner.png");background-position:center;background-size:cover;filter:saturate(.9)}
-.scene:after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(2,5,3,.18) 0%,rgba(2,5,3,.04) 35%,rgba(2,5,3,.32) 72%,rgba(2,5,3,.68) 100%);pointer-events:none}
-.topline{position:absolute;top:26px;left:34px;right:34px;display:flex;justify-content:space-between;align-items:center;color:rgba(236,222,175,.82);font:11px/1.4 system-ui,sans-serif;letter-spacing:.22em;text-transform:uppercase;text-shadow:0 2px 8px #000}
-.topline span:last-child{letter-spacing:.12em}
-.main{position:relative;width:min(540px,100%);text-align:center;padding:29px 30px 27px;background:linear-gradient(180deg,rgba(5,10,7,.58),rgba(5,9,7,.77));border:1px solid rgba(215,190,116,.25);box-shadow:0 24px 90px rgba(0,0,0,.45),inset 0 1px rgba(255,255,255,.035);backdrop-filter:blur(8px);border-radius:2px}
-.main:before{content:"";position:absolute;inset:7px;border:1px solid rgba(215,190,116,.07);pointer-events:none}
-.brand-logo{display:block;width:min(360px,100%);max-height:150px;height:auto;object-fit:contain;margin:9px auto 13px;filter:drop-shadow(0 3px 18px rgba(0,0,0,.35))}
-.subtitle{margin:19px 0 0;font:11px/1.5 system-ui,sans-serif;letter-spacing:.36em;color:#e5d092;text-transform:uppercase}
-.rule{height:1px;width:230px;max-width:80%;margin:25px auto 19px;background:linear-gradient(90deg,transparent,var(--gold),transparent);position:relative}
-.rule:after{content:"";position:absolute;width:4px;height:4px;background:var(--gold-light);border-radius:50%;left:calc(50% - 2px);top:-1.5px;box-shadow:0 0 8px var(--gold)}
-.tagline{font:10px/1.8 system-ui,sans-serif;letter-spacing:.22em;color:#ded9c8;text-transform:uppercase;margin:0 0 31px}
-.menu{width:min(330px,100%);margin:auto;display:grid;gap:9px}
-.menu button{position:relative;display:flex;align-items:center;gap:15px;width:100%;min-height:53px;padding:0 17px;border:1px solid rgba(211,186,112,.38);background:linear-gradient(110deg,rgba(18,23,17,.96),rgba(7,11,8,.96));color:#e8d9ad;text-align:left;font:15px Georgia,serif;cursor:pointer;transition:transform .18s,border-color .18s,background .18s,box-shadow .18s}
-.menu button .ico{width:25px;color:var(--gold);font-size:21px;text-align:center}
-.menu button .arrow{margin-left:auto;color:var(--gold);font-size:20px;transition:transform .18s}
-.menu button:hover,.menu button:focus-visible{outline:none;transform:translateY(-1px);border-color:#e3ca7b;box-shadow:0 0 22px rgba(202,176,92,.16)}
-.menu button:hover .arrow{transform:translateX(3px)}
-.menu button.primary{color:#fff9e7;background:linear-gradient(105deg,#788b4b,#46532f 85%);border-color:#e0cd83;box-shadow:inset 0 1px rgba(255,255,255,.17),0 5px 22px rgba(0,0,0,.28)}
-.menu button.primary .ico,.menu button.primary .arrow{color:#fff0b7}
-.menu button:active{transform:translateY(1px)}
-.footer{position:absolute;bottom:22px;left:28px;right:28px;display:flex;align-items:center;justify-content:space-between;gap:14px;font:11px system-ui,sans-serif;color:rgba(235,230,212,.78)}
-.community{display:inline-flex;align-items:center;gap:9px;border:1px solid rgba(215,190,116,.3);background:rgba(6,9,7,.78);color:#e8e0cb;padding:11px 15px;text-decoration:none;letter-spacing:.02em;backdrop-filter:blur(5px)}
-.community:hover{border-color:var(--gold);color:#fff2c4}
-.version{letter-spacing:.12em;text-shadow:0 2px 8px #000}
-.modal{position:fixed;inset:0;display:none;place-items:center;padding:20px;background:rgba(0,0,0,.72);backdrop-filter:blur(8px);z-index:5}
-.modal.open{display:grid}
-.dialog{width:min(420px,100%);padding:28px;background:#101510;border:1px solid rgba(215,190,116,.55);box-shadow:0 25px 90px #000;text-align:left}
-.dialog h2{font-weight:400;color:var(--gold-light);margin:0 0 12px;font-size:29px}
-.dialog p{font:14px/1.7 system-ui,sans-serif;color:#d0d0c2}
-.dialog .close{margin-top:12px;padding:11px 18px;background:#303b25;border:1px solid var(--gold);color:#f8edca;cursor:pointer}
-.small-note{font:10px system-ui,sans-serif;color:rgba(233,225,200,.58);margin-top:22px;letter-spacing:.08em}
-@media(max-width:600px){body{overflow:auto}.scene{padding:70px 13px 72px}.topline{top:15px;left:16px;right:16px;font-size:9px;letter-spacing:.12em}.main{padding:24px 18px;background:rgba(5,9,7,.78)}.brand-logo{width:min(300px,100%);max-height:125px;margin:8px auto 12px}.subtitle{letter-spacing:.2em;font-size:9px}.tagline{font-size:9px;letter-spacing:.1em;margin-bottom:24px}.menu button{min-height:50px}.footer{bottom:12px;left:12px;right:12px}.community{padding:9px;font-size:10px}}
-@media(prefers-reduced-motion:reduce){*,*:before,*:after{transition:none!important}}
-
-/* Main game dashboard */
-.game-screen{display:none;position:fixed;inset:0;z-index:4;background:#080b08;color:#eee7d3;font-family:system-ui,-apple-system,Segoe UI,sans-serif;overflow:auto}
-.game-screen.active{display:grid;grid-template-columns:184px minmax(0,1fr);grid-template-rows:88px minmax(0,1fr) 220px;gap:0}
-.game-top{grid-column:1/-1;display:flex;align-items:center;gap:22px;padding:12px 22px;border-bottom:1px solid rgba(215,190,116,.3);background:rgba(5,9,6,.97);min-width:0}
-.game-logo{width:64px;height:64px;object-fit:contain;flex:0 0 auto}
-.game-heading{min-width:180px}.game-heading h1{font:30px Georgia,serif;color:#f1dfad;margin:0 0 5px}.game-heading p{font-size:10px;letter-spacing:.18em;color:#c8b982;margin:0}
-.resources{display:flex;gap:9px;align-items:center;flex:1;justify-content:center}.resource{min-width:105px;padding:10px 12px;border:1px solid rgba(215,190,116,.22);border-radius:7px;background:linear-gradient(135deg,#151b12,#080c09);font-size:11px;color:#bfbba8}.resource strong{display:block;font-size:17px;color:#f4e8c7;font-weight:500;margin-top:3px}.season{min-width:120px;border-left:1px solid #383626;padding-left:20px;color:#e6d7a9;font-size:12px}.season strong{display:block;font:20px Georgia,serif;margin-bottom:3px}
-.game-nav{grid-row:2/4;grid-column:1;background:linear-gradient(180deg,#0d120d,#070a08);border-right:1px solid rgba(215,190,116,.18);padding:18px 0}
-.nav-brand{padding:0 18px 15px;color:#d9c786;font:12px Georgia,serif;letter-spacing:.15em;text-transform:uppercase}
-.game-nav button{display:flex;align-items:center;gap:13px;width:100%;padding:15px 20px;border:0;border-left:3px solid transparent;background:transparent;color:#c8c8bb;text-align:left;font-size:14px;cursor:pointer}
-.game-nav button span{width:20px;text-align:center;color:#d5bd75;font-size:18px}.game-nav button:hover,.game-nav button.selected{background:linear-gradient(90deg,#526337,#29351f);border-left-color:#e0cd83;color:#fff4cf}
-.game-main{grid-column:2;grid-row:2;display:grid;grid-template-columns:minmax(0,1fr) 292px;min-height:440px;min-width:0}
-.greenhouse-scene{position:relative;min-height:440px;overflow:hidden;background:#11180f}
-.greenhouse-scene:before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(4,8,5,.12),rgba(4,8,5,.05) 55%,rgba(4,8,5,.45)),linear-gradient(0deg,rgba(4,8,5,.7),transparent 45%),url("https://lwaxzivcjzpmmantryor.supabase.co/storage/v1/object/public/Artwork/banner.png") center/cover;filter:saturate(1.08)}
-.greenhouse-label{position:absolute;top:22px;left:24px;padding:10px 13px;border:1px solid rgba(220,198,124,.38);background:rgba(4,8,5,.75);backdrop-filter:blur(6px);color:#f1e4bd;font:12px Georgia,serif;letter-spacing:.1em;text-transform:uppercase}
-.greenhouse-bottom{position:absolute;bottom:18px;left:22px;right:22px;display:flex;justify-content:space-between;gap:12px;align-items:end}
-.greenhouse-bottom h2{font:clamp(25px,3vw,38px) Georgia,serif;margin:0 0 5px;color:#fff0c4;text-shadow:0 2px 12px #000}.greenhouse-bottom p{font-size:12px;color:#ded9c7;margin:0}
-.glass-chip{padding:10px 12px;border:1px solid rgba(215,190,116,.3);background:rgba(7,11,8,.8);color:#e3d5a9;font-size:11px;white-space:nowrap}
-.side-stack{padding:12px;display:flex;flex-direction:column;gap:11px;background:#090d0a;overflow:auto}
-.game-card{border:1px solid rgba(215,190,116,.28);border-radius:9px;padding:14px;background:linear-gradient(140deg,rgba(17,23,16,.96),rgba(7,10,8,.98));min-width:0}
-.card-title{display:flex;justify-content:space-between;align-items:center;margin:0 0 13px;font:19px Georgia,serif;color:#eddda9}
-.focus-row{display:flex;gap:12px;align-items:center}.plant-thumb{width:78px;height:86px;border-radius:6px;display:grid;place-items:center;flex:0 0 auto;background:radial-gradient(ellipse at 50% 45%,#34452a,#0b100c 72%);border:1px solid #39462a;font-size:43px}.focus-row strong{font-size:13px;display:block;line-height:1.45}.focus-row small{display:block;color:#b7b6a8;margin-top:5px;font-size:11px}.progress{height:7px;border-radius:10px;background:#292d22;overflow:hidden;margin-top:12px}.progress span{display:block;height:100%;width:62%;background:linear-gradient(90deg,#8ea84b,#d8c66d);border-radius:10px}
-.environment-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;font-size:12px}.environment-grid span{color:#bdbba9}.environment-grid strong{display:block;color:#f0e7d0;font-size:14px;margin-top:4px;font-weight:500}
-.task{display:flex;gap:9px;align-items:center;margin:9px 0;font-size:12px;color:#d2d0c2}.task input{accent-color:#91a75b;width:15px;height:15px}
-.bottom-panels{grid-column:2;grid-row:3;display:grid;grid-template-columns:1.1fr 1fr .75fr;gap:12px;padding:0 12px 12px;background:#080b08;min-height:0}
-.bottom-card{border:1px solid rgba(215,190,116,.25);border-radius:9px;padding:13px;background:linear-gradient(135deg,#111710,#080b09);min-width:0;overflow:hidden}
-.mini-plants{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.mini-plant{padding:8px;border:1px solid rgba(215,190,116,.13);border-radius:6px;background:rgba(0,0,0,.2);min-width:0}.mini-plant .leaf-art{height:56px;display:grid;place-items:center;font-size:37px;background:radial-gradient(ellipse,#34452b,#0a0e0a 72%);border-radius:4px;margin-bottom:7px}.mini-plant strong{display:block;font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.mini-plant small{font-size:10px;color:#aaa995}
-.research-item{display:flex;gap:9px;align-items:center;margin:11px 0;font-size:11px}.research-icon{font-size:22px;color:#9bb65b}.research-copy{flex:1;min-width:0}.research-copy strong{font-weight:500}.research-copy .progress{margin-top:5px;height:5px}.research-copy small{color:#aaa995}
-.quick-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.quick-grid button{min-height:67px;border:1px solid rgba(215,190,116,.3);border-radius:6px;background:linear-gradient(135deg,#1b2116,#0b0e0b);color:#e8d7a4;cursor:pointer;font-size:11px}.quick-grid button span{display:block;font-size:23px;margin-bottom:4px}.quick-grid button:hover{border-color:#dfc878;background:#29351e}
-.game-toast{position:fixed;z-index:10;bottom:20px;left:50%;transform:translateX(-50%);padding:12px 18px;border:1px solid #bca75f;border-radius:6px;background:#11180f;color:#f1e3b7;box-shadow:0 8px 35px #000;display:none;font-size:13px}.game-toast.show{display:block}
-@media(max-width:1100px){.game-screen.active{grid-template-columns:150px minmax(0,1fr);grid-template-rows:auto minmax(0,1fr) auto}.game-top{flex-wrap:wrap;gap:12px}.game-heading{min-width:150px}.resources{order:3;flex-basis:100%;justify-content:flex-start;overflow:auto}.season{margin-left:auto}.game-main{grid-template-columns:minmax(0,1fr) 260px}.bottom-panels{grid-template-columns:1fr 1fr}.bottom-card:last-child{grid-column:1/-1}.quick-grid{grid-template-columns:repeat(4,1fr)}}
-@media(max-width:760px){.game-screen.active{display:flex;flex-direction:column}.game-top{padding:10px 14px}.game-logo{width:48px;height:48px}.game-heading h1{font-size:23px}.season{display:none}.resources{gap:6px}.resource{min-width:90px;padding:8px}.resource strong{font-size:14px}.game-nav{order:2;display:flex;overflow:auto;padding:0;border-right:0;border-bottom:1px solid #353323}.nav-brand{display:none}.game-nav button{min-width:max-content;width:auto;padding:12px 14px;border-left:0;border-bottom:3px solid transparent;font-size:12px}.game-nav button.selected{border-bottom-color:#e0cd83}.game-main{order:3;display:flex;flex-direction:column}.greenhouse-scene{min-height:360px}.side-stack{display:grid;grid-template-columns:1fr 1fr}.side-stack .game-card:last-child{grid-column:1/-1}.bottom-panels{order:4;display:flex;flex-direction:column;padding:10px}.bottom-card{overflow:visible}.quick-grid{grid-template-columns:1fr 1fr}}
-
-
-.catalog-screen{display:none;position:fixed;inset:0;z-index:7;overflow:auto;background:radial-gradient(ellipse at 50% 0%,#182116 0%,#090d0a 54%,#060806 100%);color:#f0ead8;padding:30px clamp(16px,3vw,44px) 44px;font-family:system-ui,-apple-system,Segoe UI,sans-serif}
-.catalog-screen.active{display:block}.catalog-header{display:flex;align-items:center;justify-content:space-between;gap:18px;border-bottom:1px solid rgba(215,190,116,.23);padding-bottom:22px}.catalog-eyebrow{font-size:10px;letter-spacing:.22em;color:#b9a764;margin:0 0 9px}.catalog-header h2{font:clamp(30px,4vw,44px) Georgia,serif;color:#f0dfae;margin:0}.catalog-subtitle{font-size:13px;color:#aaa997;margin:8px 0 0}.catalog-close{padding:12px 15px;border:1px solid rgba(215,190,116,.42);background:#141b12;color:#e9d9a8;border-radius:5px;cursor:pointer}.catalog-toolbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding:20px 0}.catalog-search{display:flex;align-items:center;gap:10px;flex:1;min-width:220px;padding:0 13px;border:1px solid #343b2a;border-radius:6px;background:#10150f;color:#d8c57c;font-size:22px}.catalog-search input{width:100%;border:0;outline:0;background:transparent;color:#eee8d8;padding:13px 0;font:13px system-ui}.catalog-toolbar select{padding:13px 12px;border:1px solid #343b2a;border-radius:6px;background:#10150f;color:#e7dfc8;font:12px system-ui}.catalog-count{font-size:12px;color:#b9b5a2;white-space:nowrap}.catalog-status{font-size:13px;color:#bdb9a7;padding:8px 0 16px}.plant-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:15px}.species-card{overflow:hidden;border:1px solid rgba(215,190,116,.2);border-radius:8px;background:linear-gradient(145deg,#151b13,#090c09);cursor:pointer;transition:transform .18s,border-color .18s,box-shadow .18s}.species-card:hover,.species-card:focus-visible{transform:translateY(-3px);outline:0;border-color:#bda75f;box-shadow:0 12px 28px #0008}.species-image{height:175px;display:grid;place-items:center;background:radial-gradient(ellipse at 50% 60%,#273b24,#0b100c 72%);overflow:hidden}.species-image img{width:100%;height:100%;object-fit:contain;padding:8px}.species-image .image-fallback{font-size:56px;filter:drop-shadow(0 4px 8px #0008)}.species-body{padding:13px}.species-body h3{font:18px/1.25 Georgia,serif;margin:0 0 8px;color:#f1e2b7}.species-meta{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 9px}.species-tag{padding:4px 7px;border:1px solid #3c442d;border-radius:4px;color:#c9c5b1;font-size:10px}.species-summary{font-size:11px;line-height:1.55;color:#aaa997;margin:0;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}.plant-detail-modal{display:none;position:fixed;inset:0;z-index:9;place-items:center;padding:20px;background:#000b;backdrop-filter:blur(8px)}.plant-detail-modal.open{display:grid}.plant-detail-card{position:relative;width:min(650px,100%);max-height:90vh;overflow:auto;border:1px solid rgba(215,190,116,.42);border-radius:9px;padding:26px;background:linear-gradient(145deg,#172016,#090d0a);box-shadow:0 25px 90px #000}.detail-close{position:absolute;right:12px;top:8px;border:0;background:transparent;color:#e5d7ac;font-size:30px;cursor:pointer}.detail-hero{display:flex;gap:20px;align-items:center;padding:10px 0 20px}.detail-image{width:155px;height:170px;flex:0 0 auto;border-radius:7px;background:radial-gradient(ellipse,#2a4025,#090d0a 72%);display:grid;place-items:center;overflow:hidden}.detail-image img{width:100%;height:100%;object-fit:contain;padding:8px}.detail-image .image-fallback{font-size:64px}.detail-hero h2{font:30px Georgia,serif;color:#f0dfae;margin:0 0 8px}.detail-hero p{font-size:12px;color:#bdb9a7;margin:0;line-height:1.6}.detail-fields{display:grid;grid-template-columns:1fr 1fr;gap:10px}.detail-field{padding:13px;border:1px solid #343b2a;border-radius:6px;background:#0d120d}.detail-field span{display:block;color:#a9a894;font-size:10px;text-transform:uppercase;letter-spacing:.1em;margin-bottom:7px}.detail-field strong{font-size:13px;color:#eee5ca;font-weight:500;line-height:1.5}.detail-description{font-size:13px;line-height:1.7;color:#d0cebd;margin:8px 0 18px}.trait-list{display:flex;flex-wrap:wrap;gap:7px}.trait-list span{padding:7px 9px;border-radius:4px;background:#26321e;color:#d7d7bd;font-size:11px}
-@media(max-width:600px){.catalog-header{align-items:flex-start;flex-direction:column}.catalog-toolbar select{flex:1}.catalog-count{width:100%}.plant-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.species-image{height:135px}.species-body{padding:10px}.species-body h3{font-size:15px}.detail-hero{align-items:flex-start;flex-direction:column}.detail-image{width:100%;height:170px}.detail-fields{grid-template-columns:1fr}}
-
+:root{color-scheme:dark;--bg:#090b10;--panel:#11151e;--panel2:#151b26;--line:#252d3b;--text:#edf1f7;--muted:#8e9aab;--gold:#c9a86a;--blue:#6da8ff;--green:#55c99a;--red:#f07883}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 50% -15%,#1a2638 0,transparent 42%),var(--bg);color:var(--text);font:14px/1.5 Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,sans-serif;min-height:100vh}
+button,input,select{font:inherit}.shell{max-width:1440px;margin:auto;padding:28px clamp(16px,3vw,42px) 60px}.top{display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line);padding-bottom:20px;gap:18px}.brand{display:flex;align-items:center;gap:13px}.mark{width:42px;height:42px;border:1px solid #806c49;border-radius:12px;display:grid;place-items:center;color:var(--gold);font:24px Georgia;background:linear-gradient(145deg,#252316,#11151d)}.brand h1{font:600 19px Georgia,serif;letter-spacing:.12em;margin:0}.brand small{display:block;color:var(--muted);font-size:9px;letter-spacing:.24em;margin-top:3px}.top-right{color:var(--muted);font-size:11px;letter-spacing:.12em;text-transform:uppercase}
+.hero{padding:48px 0 34px;display:grid;grid-template-columns:1fr minmax(300px,510px);gap:30px;align-items:end}.eyebrow{color:var(--gold);font-size:10px;letter-spacing:.24em;text-transform:uppercase}.hero h2{font:400 clamp(34px,5vw,58px)/1.03 Georgia,serif;letter-spacing:-.025em;margin:12px 0}.hero p{color:var(--muted);max-width:520px;margin:0}.searchbox{background:linear-gradient(145deg,#171e2a,#10141d);border:1px solid #354052;border-radius:13px;padding:15px;box-shadow:0 18px 55px #0005}.searchbox label{display:block;color:#aeb9c9;font-size:10px;letter-spacing:.15em;text-transform:uppercase;margin:0 0 9px}.searchrow{display:grid;grid-template-columns:1fr 100px auto;gap:8px}.searchrow input,.searchrow select{min-width:0;background:#090d14;border:1px solid #303a4b;border-radius:8px;padding:13px;color:var(--text);outline:none}.searchrow input:focus,.searchrow select:focus{border-color:var(--blue)}.searchrow button{border:0;border-radius:8px;padding:0 19px;background:linear-gradient(135deg,#d8bd83,#a9874e);color:#17140e;font-weight:700;cursor:pointer}.searchrow button:disabled{opacity:.55;cursor:wait}.hint{font-size:10px;color:#7e8a9b;margin:9px 2px 0}.notice{display:none;margin:18px 0;padding:13px 15px;border:1px solid #5d4c34;border-radius:9px;background:#211b13;color:#e8d3a8}.notice.show{display:block}.dashboard{display:none}.dashboard.show{display:block}.profile{display:flex;align-items:center;gap:17px;padding:18px 0 22px;border-bottom:1px solid var(--line);margin-bottom:20px}.avatar{width:78px;height:78px;border-radius:14px;border:1px solid #5c513b;object-fit:cover;background:#202938}.player-name{min-width:0}.player-name h3{font:28px Georgia,serif;margin:0 0 3px}.player-name p{color:var(--muted);margin:0;font-size:12px}.level{margin-left:auto;text-align:right;color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:.13em}.level strong{display:block;color:var(--gold);font:24px Georgia,serif;letter-spacing:0}.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px}.card{background:linear-gradient(145deg,var(--panel2),var(--panel));border:1px solid var(--line);border-radius:12px;padding:17px;min-width:0}.stat-label{color:var(--muted);font-size:10px;letter-spacing:.15em;text-transform:uppercase}.stat-value{font:30px Georgia,serif;margin-top:7px}.stat-sub{font-size:11px;color:var(--muted);margin-top:2px}.section-title{display:flex;align-items:center;justify-content:space-between;margin:27px 0 12px}.section-title h3{font:22px Georgia,serif;margin:0}.section-title span{font-size:10px;color:var(--muted);letter-spacing:.12em;text-transform:uppercase}.columns{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(320px,.85fr);gap:13px}.rank-list{display:grid;gap:12px}.rank{display:flex;align-items:center;gap:13px;padding:12px;border:1px solid #293344;border-radius:9px;background:#0d121a}.rank img{width:58px;height:58px;object-fit:contain}.rank-copy{flex:1}.rank-copy strong{display:block;font:19px Georgia,serif}.rank-copy small{color:var(--muted)}.lp{text-align:right;color:var(--gold);font:18px Georgia,serif}.champ-list{display:grid;gap:12px}.champ{display:grid;grid-template-columns:42px minmax(0,1fr) auto;gap:10px;align-items:center}.champ img{width:42px;height:42px;border-radius:8px}.champ strong{display:block;font-size:12px}.champ small{color:var(--muted);font-size:10px}.champ .rate{text-align:right;font-size:12px;color:var(--green)}.matches{display:grid;gap:9px}.match{display:grid;grid-template-columns:54px minmax(0,1fr) auto auto;gap:13px;align-items:center;padding:12px;border:1px solid var(--line);border-left:3px solid var(--green);border-radius:9px;background:#0d121a}.match.loss{border-left-color:var(--red)}.match img{width:48px;height:48px;border-radius:8px}.match strong{display:block;font-size:13px}.match small{color:var(--muted);font-size:10px}.score{font:17px Georgia,serif;white-space:nowrap}.result{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--green)}.loss .result{color:var(--red)}.empty{padding:30px;text-align:center;color:var(--muted);border:1px dashed #30394a;border-radius:10px}.footer{border-top:1px solid var(--line);margin-top:34px;padding-top:16px;color:#697587;font-size:10px;display:flex;justify-content:space-between;gap:15px}.loading{display:inline-block;width:12px;height:12px;border:2px solid #342b1e;border-top-color:#e5c98d;border-radius:50%;animation:spin .7s linear infinite;vertical-align:-2px;margin-right:7px}@keyframes spin{to{transform:rotate(360deg)}}@media(max-width:900px){.hero{grid-template-columns:1fr}.grid{grid-template-columns:repeat(2,1fr)}.columns{grid-template-columns:1fr}}@media(max-width:560px){.shell{padding-top:17px}.top-right{display:none}.hero{padding-top:35px}.searchrow{grid-template-columns:1fr 95px}.searchrow button{grid-column:1/-1;padding:12px}.profile{gap:12px}.avatar{width:62px;height:62px}.player-name h3{font-size:21px}.level strong{font-size:19px}.grid{gap:8px}.card{padding:13px}.stat-value{font-size:25px}.match{grid-template-columns:44px minmax(0,1fr) auto;gap:9px;padding:9px}.match img{width:40px;height:40px}.match .result{display:none}.score{font-size:14px}.footer{flex-direction:column}}
 </style>
 </head>
-<body>
-<main class="scene" aria-label="J2Grows title screen">
-<div class="topline"><span>✦ An independent botanical simulation</span><span>Est. 2026 · Build 0.1.0</span></div>
-<section class="main">
-<img class="brand-logo" src="https://lwaxzivcjzpmmantryor.supabase.co/storage/v1/object/public/Artwork/logo.png" alt="J2Grows logo">
-<p class="subtitle">Botanical Genetics Lab</p>
-<div class="rule"></div>
-<p class="tagline">Grow <span> | </span> Research <span> | </span> Breed <span> | </span> Discover</p>
-<nav class="menu" aria-label="Main menu">
-<button class="primary" data-action="continue"><span class="ico">♧</span><span>Continue</span><span class="arrow">›</span></button>
-<button data-action="new"><span class="ico">♧</span><span>New Game</span><span class="arrow">›</span></button>
-<button data-action="settings"><span class="ico">⚙</span><span>Settings</span><span class="arrow">›</span></button>
-<button data-action="credits"><span class="ico">▤</span><span>Credits</span><span class="arrow">›</span></button>
-</nav>
-<p class="small-note">A living collection. An endless discovery.</p>
+<body><main class="shell">
+<header class="top"><div class="brand"><div class="mark">R</div><div><h1>RIFTLINE</h1><small>LEAGUE OF LEGENDS ANALYTICS</small></div></div><div class="top-right">Independent player insights · Season 2026</div></header>
+<section class="hero"><div><div class="eyebrow">Performance intelligence</div><h2>Know your game.<br><span style="color:var(--gold)">Find your edge.</span></h2><p>Explore ranked performance, champion trends and recent match data. Search any public League of Legends account by Riot ID.</p></div>
+<form class="searchbox" id="search-form"><label for="riot-id">Find a player</label><div class="searchrow"><input id="riot-id" name="riotId" placeholder="GameName#TAG" autocomplete="off" required><select id="platform" aria-label="Server"><option value="EUW1">EU West</option><option value="EUN1">EU Nordic & East</option><option value="NA1">North America</option><option value="KR">Korea</option><option value="BR1">Brazil</option><option value="JP1">Japan</option><option value="LA1">LAN</option><option value="LA2">LAS</option><option value="OC1">Oceania</option><option value="TR1">Türkiye</option><option value="RU">Russia</option><option value="PH2">Philippines</option><option value="SG2">Singapore</option><option value="TH2">Thailand</option><option value="TW2">Taiwan</option><option value="VN2">Vietnam</option></select><button id="search-button" type="submit">Search account ↗</button></div><p class="hint">Enter a Riot ID including its tag, for example Faker#KR1.</p></form></section>
+<div class="notice" id="notice" role="status"></div>
+<section class="dashboard" id="dashboard">
+<div class="profile"><img class="avatar" id="avatar" alt="Player profile icon"><div class="player-name"><h3 id="player-title">Player</h3><p id="player-subtitle">Summoner profile</p></div><div class="level">Summoner level<strong id="player-level">—</strong></div></div>
+<div class="grid"><article class="card"><div class="stat-label">Solo / Duo win rate</div><div class="stat-value" id="winrate">—</div><div class="stat-sub" id="record">No ranked data</div></article><article class="card"><div class="stat-label">Ranked tier</div><div class="stat-value" id="rank">—</div><div class="stat-sub" id="lp">Solo / Duo queue</div></article><article class="card"><div class="stat-label">Recent KDA</div><div class="stat-value" id="kda">—</div><div class="stat-sub" id="kda-sub">Last 10 matches</div></article><article class="card"><div class="stat-label">Recent win rate</div><div class="stat-value" id="recent-winrate">—</div><div class="stat-sub" id="recent-record">Last 10 matches</div></article></div>
+<div class="columns"><section><div class="section-title"><h3>Ranked profile</h3><span>Current season</span></div><div class="card rank-list" id="rank-list"><div class="empty">Ranked information will appear here.</div></div></section><section><div class="section-title"><h3>Top champions</h3><span>Recent matches</span></div><div class="card champ-list" id="champ-list"><div class="empty">Champion insights will appear here.</div></div></section></div>
+<div class="section-title"><h3>Recent matches</h3><span id="match-caption">Match history · Latest 10</span></div><div class="matches" id="matches"><div class="empty">Search for a player to load match history.</div></div>
 </section>
-<footer class="footer">
-<a class="community" href="https://github.com/j2grows-cmd/j2grows-game" target="_blank" rel="noreferrer"><span>✿</span> Join the Community <span aria-hidden="true">↗</span></a>
-<span class="version">v0.1.0</span>
-</footer>
+<footer class="footer"><span>RIFTLINE · An independent community analytics project.</span><span>Not endorsed by Riot Games. Data provided by Riot Games API.</span></footer>
 </main>
-
-<section class="game-screen" id="game-screen" aria-label="J2Grows game dashboard">
-<header class="game-top">
-<img class="game-logo" src="https://lwaxzivcjzpmmantryor.supabase.co/storage/v1/object/public/Artwork/logo.png" alt="J2Grows logo">
-<div class="game-heading"><h1 id="section-heading">Greenhouse Lab</h1><p>GROW | RESEARCH | BREED | DISCOVER</p></div>
-<div class="resources">
-<div class="resource">Money<strong>£12,450</strong></div><div class="resource">Research<strong>1,280</strong></div><div class="resource">Plants<strong>24 / 50</strong></div>
-</div>
-<div class="season"><strong>☀ Spring</strong>12 Apr 2026 · 10:24</div>
-</header>
-<nav class="game-nav" aria-label="Game navigation">
-<div class="nav-brand">Your laboratory</div>
-<button class="selected" data-section="Greenhouse Lab"><span>⌂</span>Greenhouse</button>
-<button data-section="Plant Collection" id="open-plants"><span>♧</span>Plants</button>
-<button data-section="Research Centre"><span>⚗</span>Research</button>
-<button data-section="Breeding Lab"><span>⚯</span>Breeding</button>
-<button data-section="Genetics Archive"><span>⌘</span>Genetics</button>
-<button data-section="Inventory"><span>▣</span>Inventory</button>
-<button data-section="Plant Market"><span>🛒</span>Market</button>
-<button data-section="Field Journal"><span>▤</span>Journal</button>
-<button data-section="Achievements"><span>♜</span>Achievements</button>
-<button id="return-title"><span>←</span>Title screen</button>
-</nav>
-<div class="game-main">
-<section class="greenhouse-scene">
-<div class="greenhouse-label">✦ Your first greenhouse</div>
-<div class="greenhouse-bottom"><div><h2>A world of growth.</h2><p>Every specimen has a story. Every cross, a possibility.</p></div><div class="glass-chip">🌡 24.6°C &nbsp; · &nbsp; 💧 78% RH</div></div>
-</section>
-<aside class="side-stack">
-<section class="game-card"><h2 class="card-title">Current Focus <span>›</span></h2><div class="focus-row"><div class="plant-thumb">🌿</div><div><strong>Alocasia Frydek<br>Variegated</strong><small>Growing · 3d 4h 22m</small></div></div><div class="progress"><span></span></div></section>
-<section class="game-card"><h2 class="card-title">Environment <span>›</span></h2><div class="environment-grid"><div>🌡 <span>Temperature</span><strong>24.6°C</strong></div><div>💧 <span>Humidity</span><strong>78%</strong></div><div>☀ <span>Light level</span><strong>320 PPFD</strong></div><div>♧ <span>Plant health</span><strong>96%</strong></div></div></section>
-<section class="game-card"><h2 class="card-title">Daily Tasks <span>3/5</span></h2><label class="task"><input type="checkbox" checked> Water greenhouse</label><label class="task"><input type="checkbox" checked> Check plant health</label><label class="task"><input type="checkbox"> Crossbreed Alocasia (1/2)</label><label class="task"><input type="checkbox"> Complete research project</label><label class="task"><input type="checkbox"> List plant on market</label></section>
-</aside>
-</div>
-<section class="bottom-panels">
-<div class="bottom-card"><h2 class="card-title">Recent Plants <span>View all →</span></h2><div class="mini-plants"><div class="mini-plant"><div class="leaf-art">🌱</div><strong>Monstera</strong><small>Thai Constellation</small></div><div class="mini-plant"><div class="leaf-art">🌿</div><strong>Philodendron</strong><small>Pink Princess</small></div><div class="mini-plant"><div class="leaf-art">🍃</div><strong>Alocasia</strong><small>Black Velvet</small></div></div></div>
-<div class="bottom-card"><h2 class="card-title">Active Research <span>View all →</span></h2><div class="research-item"><span class="research-icon">🌱</span><div class="research-copy"><strong>Variegation Stability</strong><div class="progress"><span style="width:68%"></span></div><small>68% complete · 2d 14h</small></div></div><div class="research-item"><span class="research-icon">♧</span><div class="research-copy"><strong>Growth Rate Optimisation</strong><div class="progress"><span style="width:45%"></span></div><small>45% complete · 4d 6h</small></div></div></div>
-<div class="bottom-card"><h2 class="card-title">Quick Actions</h2><div class="quick-grid"><button data-quick="Watering"><span>♧</span>Watering</button><button data-quick="Fertilising"><span>✦</span>Fertilise</button><button data-quick="Propagation"><span>✂</span>Propagate</button><button data-quick="New Cross"><span>⚯</span>New Cross</button></div></div>
-</section>
-</section>
-
-<section class="catalog-screen" id="catalog-screen" aria-label="Plant catalogue">
-<header class="catalog-header"><div><p class="catalog-eyebrow">BOTANICAL DATABASE · LIVE FROM SUPABASE</p><h2>Plant Collection</h2><p class="catalog-subtitle">Explore the species in your J2Grows botanical archive.</p></div><button class="catalog-close" id="catalog-close">← Back to Greenhouse</button></header>
-<div class="catalog-toolbar"><label class="catalog-search">⌕ <input id="plant-search" type="search" placeholder="Search plants, families or traits…" autocomplete="off"></label><select id="rarity-filter" aria-label="Filter by rarity"><option value="">All rarities</option><option>Common</option><option>Uncommon</option><option>Rare</option><option>Very Rare</option><option>Ultra Rare</option><option>Mythic</option></select><select id="difficulty-filter" aria-label="Filter by difficulty"><option value="">All difficulties</option><option>Easy</option><option>Moderate</option><option>Advanced</option></select><span id="catalog-count" class="catalog-count">Connecting to species archive…</span></div>
-<div id="catalog-status" class="catalog-status">Loading your plant catalogue…</div><div id="plant-grid" class="plant-grid"></div>
-</section>
-<div class="plant-detail-modal" id="plant-detail-modal" role="dialog" aria-modal="true" aria-labelledby="plant-detail-title"><div class="plant-detail-card"><button class="detail-close" id="detail-close" aria-label="Close plant details">×</button><div id="plant-detail-content"></div></div></div>
-
-<div class="game-toast" id="game-toast" role="status"></div>
-
-<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="dialog-title">
-<div class="dialog"><h2 id="dialog-title">Welcome to J2Grows</h2><div id="dialog-content"></div><button class="close" id="close-modal">Return to title</button></div>
-</div>
 <script>
-const modal=document.getElementById('modal');
-const title=document.getElementById('dialog-title');
-const content=document.getElementById('dialog-content');
-function showGame(){modal.classList.remove('open');document.getElementById('game-screen').classList.add('active');document.body.style.overflow='auto';}
-function showToast(message){const toast=document.getElementById('game-toast');toast.textContent=message;toast.classList.add('show');window.clearTimeout(showToast.timer);showToast.timer=window.setTimeout(()=>toast.classList.remove('show'),2400);}
-function showDialog(kind){
- const copy={
-  continue:['No save found yet','Your greenhouse is waiting. Start a new game to begin your first collection.'],
-  new:['Begin a new collection','Your journey starts with a small greenhouse, a few specimens and a world of botanical discoveries.'],
-  settings:['Settings','Audio: coming soon<br>Display: responsive<br>Motion: respects your device preferences<br><br>More settings will be available as development progresses.'],
-  credits:['Credits','J2Grows — Botanical Genetics Lab<br><br>Created as an independent botanical genetics and plant-breeding simulation project.<br><br>Prototype build 0.1.0']
- };
- if(kind==='new'){showGame();return;}
- title.textContent=copy[kind][0];content.innerHTML='<p>'+copy[kind][1]+'</p>';modal.classList.add('open');document.getElementById('close-modal').focus();
-}
-document.querySelectorAll('[data-action]').forEach(button=>button.addEventListener('click',()=>showDialog(button.dataset.action)));
-
 const SUPABASE_URL='https://lwaxzivcjzpmmantryor.supabase.co';
-const SUPABASE_PUBLISHABLE_KEY='sb_publishable_gplxHER4N2g4oR6Sf0A6SA_khxiDCOq';
-let speciesCache=[];
-const plantGrid=document.getElementById('plant-grid');
-const catalogStatus=document.getElementById('catalog-status');
-const catalogCount=document.getElementById('catalog-count');
-const rarityFilter=document.getElementById('rarity-filter');
-const difficultyFilter=document.getElementById('difficulty-filter');
-const plantSearch=document.getElementById('plant-search');
-function imageUrl(path){return path?SUPABASE_URL+'/storage/v1/object/public/plant-images/'+path.split('/').map(encodeURIComponent).join('/'):'';}
-function escapeHtml(value){return String(value??'').replace(/[&<>"']/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));}
-function cardImage(plant){const url=imageUrl(plant.image_path);return url?'<img loading="lazy" src="'+escapeHtml(url)+'" alt="'+escapeHtml(plant.name)+'" onerror="this.remove();this.parentElement.innerHTML=\'<span class=&quot;image-fallback&quot;>🌿</span>\'">':'<span class="image-fallback">🌿</span>';}
-function renderSpecies(){
- const q=plantSearch.value.trim().toLowerCase(),rarity=rarityFilter.value,difficulty=difficultyFilter.value;
- const filtered=speciesCache.filter(p=>(!q||[p.name,p.family,p.summary,...(p.traits||[])].some(v=>String(v||'').toLowerCase().includes(q)))&&(!rarity||p.rarity===rarity)&&(!difficulty||p.difficulty===difficulty));
- catalogCount.textContent=filtered.length+' of '+speciesCache.length+' species';
- plantGrid.innerHTML=filtered.map((p,i)=>'<article class="species-card" tabindex="0" data-species-index="'+speciesCache.indexOf(p)+'"><div class="species-image">'+cardImage(p)+'</div><div class="species-body"><h3>'+escapeHtml(p.name)+'</h3><div class="species-meta"><span class="species-tag">'+escapeHtml(p.rarity||'Rarity unknown')+'</span><span class="species-tag">'+escapeHtml(p.difficulty||'Difficulty unknown')+'</span></div><p class="species-summary">'+escapeHtml(p.summary||p.family||'A species in your botanical archive.')+'</p></div></article>').join('');
- if(!filtered.length)plantGrid.innerHTML='<p class="catalog-status">No plants match those filters. Try another search.</p>';
+const SUPABASE_KEY='sb_publishable_gplxHER4N2g4oR6Sf0A6SA_khxiDCOq';
+const form=document.getElementById('search-form'),button=document.getElementById('search-button'),notice=document.getElementById('notice'),dashboard=document.getElementById('dashboard');
+const platformNames={EUW1:'EU West',EUN1:'EU Nordic & East',NA1:'North America',KR:'Korea',BR1:'Brazil',JP1:'Japan',LA1:'LAN',LA2:'LAS',OC1:'Oceania',TR1:'Türkiye',RU:'Russia',PH2:'Philippines',SG2:'Singapore',TH2:'Thailand',TW2:'Taiwan',VN2:'Vietnam'};
+let ddragonVersion='16.18.1';
+async function loadVersion(){try{const r=await fetch('https://ddragon.leagueoflegends.com/api/versions.json');const v=await r.json();if(v?.[0])ddragonVersion=v[0]}catch{}}
+function showNotice(message){notice.textContent=message;notice.classList.add('show')}
+function hideNotice(){notice.classList.remove('show')}
+function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function championIcon(name){return 'https://ddragon.leagueoflegends.com/cdn/'+ddragonVersion+'/img/champion/'+encodeURIComponent(name)+'.png'}
+function rankLabel(q){return q==='RANKED_SOLO_5x5'?'Solo / Duo':q==='RANKED_FLEX_SR'?'Flex':'Ranked'}
+function setText(id,value){document.getElementById(id).textContent=value}
+function render(data,platform){
+ const {account,summoner,ranked=[],matches=[]}=data;
+ setText('player-title',(account.gameName||'Unknown')+'#'+(account.tagLine||''));
+ setText('player-subtitle',platformNames[platform]+' · '+platform+' · Riot account');
+ setText('player-level',summoner.summonerLevel??'—');
+ document.getElementById('avatar').src='https://ddragon.leagueoflegends.com/cdn/'+ddragonVersion+'/img/profileicon/'+summoner.profileIconId+'.png';
+ const solo=ranked.find(x=>x.queueType==='RANKED_SOLO_5x5');
+ if(solo){const total=solo.wins+solo.losses;setText('winrate',total?Math.round(solo.wins/total*100)+'%':'—');setText('record',solo.wins+'W · '+solo.losses+'L');setText('rank',solo.tier+' '+solo.rank);setText('lp',solo.leaguePoints+' LP · '+solo.wins+' wins')}else{setText('winrate','—');setText('record','No Solo / Duo placement');setText('rank','Unranked');setText('lp','Solo / Duo queue')}
+ const valid=matches.filter(m=>m.info?.participants?.length);const me=valid.map(m=>m.info.participants.find(p=>p.puuid===account.puuid)).filter(Boolean);
+ if(me.length){const kills=me.reduce((a,p)=>a+p.kills,0),deaths=me.reduce((a,p)=>a+p.deaths,0),assists=me.reduce((a,p)=>a+p.assists,0),wins=me.filter(p=>p.win).length;setText('kda',deaths?((kills+assists)/deaths).toFixed(2):'Perfect');setText('kda-sub',Math.round(kills/me.length)+' / '+Math.round(deaths/me.length)+' / '+Math.round(assists/me.length)+' avg K/D/A');setText('recent-winrate',Math.round(wins/me.length*100)+'%');setText('recent-record',wins+'W · '+(me.length-wins)+'L · '+me.length+' games')}else{setText('kda','—');setText('kda-sub','No recent match data');setText('recent-winrate','—');setText('recent-record','No recent match data')}
+ const rankList=document.getElementById('rank-list');rankList.innerHTML=ranked.length?ranked.map(q=>'<div class="rank"><img src="https://raw.communitydragon.org/latest/plugins/rcp-fe-lol-static-assets/global/default/images/ranked-emblem/'+String(q.tier||'').toLowerCase()+'.png" onerror="this.style.opacity=.25" alt=""><div class="rank-copy"><strong>'+esc(q.tier)+' '+esc(q.rank)+'</strong><small>'+rankLabel(q.queueType)+' · '+q.wins+'W / '+q.losses+'L</small></div><div class="lp">'+q.leaguePoints+' LP</div></div>').join(''):'<div class="empty">No ranked entries found for this account.</div>';
+ const counts={};me.forEach(p=>{const k=p.championName||'Unknown';if(!counts[k])counts[k]={games:0,wins:0,k:0,d:0,a:0};const c=counts[k];c.games++;c.wins+=p.win?1:0;c.k+=p.kills;c.d+=p.deaths;c.a+=p.assists});
+ const champs=Object.entries(counts).sort((a,b)=>b[1].games-a[1].games).slice(0,5);document.getElementById('champ-list').innerHTML=champs.length?champs.map(([name,c])=>'<div class="champ"><img src="'+championIcon(name)+'" alt="'+esc(name)+'" onerror="this.style.visibility=\'hidden\'"><div><strong>'+esc(name)+'</strong><small>'+c.games+' games · '+(c.d?((c.k+c.a)/c.d).toFixed(2):'Perfect')+' KDA</small></div><div class="rate">'+Math.round(c.wins/c.games*100)+'% WR</div></div>').join(''):'<div class="empty">No champion data available yet.</div>';
+ const matchBox=document.getElementById('matches');matchBox.innerHTML=me.length?me.map(p=>{const m=valid.find(x=>x.info.participants.includes(p));const info=m.info;const duration=Math.round(info.gameDuration/60);const date=new Date(info.gameCreation).toLocaleDateString();return '<article class="match '+(p.win?'':'loss')+'"><img src="'+championIcon(p.championName)+'" alt="'+esc(p.championName)+'"><div><strong>'+esc(p.championName)+' <span style="color:var(--muted);font-weight:400">· '+esc(info.gameMode)+'</span></strong><small>'+date+' · '+duration+' min · '+esc(p.teamPosition||p.lane||'Role n/a')+'</small></div><div class="score">'+p.kills+'/'+p.deaths+'/'+p.assists+'</div><div class="result">'+(p.win?'Victory':'Defeat')+'</div></article>'}).join(''):'<div class="empty">No recent matches returned. The account may be new or match history may be unavailable.</div>';
+ setText('match-caption','Latest '+me.length+' matches');
+ dashboard.classList.add('show');
 }
-async function loadSpecies(){
- catalogStatus.textContent='Connecting to your Supabase species archive…';
- try{
-  const response=await fetch(SUPABASE_URL+'/rest/v1/species?select=id,name,family,difficulty,rarity,image_path,summary,light,humidity,water,traits&order=name.asc',{headers:{apikey:SUPABASE_PUBLISHABLE_KEY,Authorization:'Bearer '+SUPABASE_PUBLISHABLE_KEY}});
-  if(!response.ok)throw new Error(response.status===401||response.status===403?'The species table is not publicly readable yet. Check its SELECT policy and Data API grants.':'Supabase returned HTTP '+response.status+'.');
-  speciesCache=await response.json();
-  if(!Array.isArray(speciesCache))throw new Error('Unexpected response from the species table.');
-  catalogStatus.textContent=speciesCache.length?'Live catalogue loaded from Supabase. Select any plant to inspect its details.':'Your species table is empty.';
-  renderSpecies();
- }catch(error){catalogStatus.textContent='Could not load the live catalogue: '+error.message+' The dashboard is still available; check Supabase table access and the plant-images bucket.';catalogCount.textContent='Catalogue unavailable';}
-}
-function openCatalog(){document.getElementById('game-screen').classList.remove('active');document.getElementById('catalog-screen').classList.add('active');document.getBodyScrollLock=true;document.body.style.overflow='auto';if(!speciesCache.length)loadSpecies();}
-function closeCatalog(){document.getElementById('catalog-screen').classList.remove('active');document.getElementById('game-screen').classList.add('active');}
-document.getElementById('open-plants').addEventListener('click',openCatalog);
-document.getElementById('catalog-close').addEventListener('click',closeCatalog);
-[plantSearch,rarityFilter,difficultyFilter].forEach(el=>el.addEventListener(el===plantSearch?'input':'change',renderSpecies));
-plantGrid.addEventListener('click',event=>{const card=event.target.closest('[data-species-index]');if(card)showPlantDetails(speciesCache[Number(card.dataset.speciesIndex)]);});
-plantGrid.addEventListener('keydown',event=>{if((event.key==='Enter'||event.key===' ')&&event.target.matches('[data-species-index]')){event.preventDefault();showPlantDetails(speciesCache[Number(event.target.dataset.speciesIndex)]);}});
-function showPlantDetails(p){
- if(!p)return;
- const url=imageUrl(p.image_path),traits=Array.isArray(p.traits)?p.traits.filter(t=>t&&t!=='Not yet researched'):[];
- document.getElementById('plant-detail-content').innerHTML='<div class="detail-hero"><div class="detail-image">'+(url?'<img src="'+escapeHtml(url)+'" alt="'+escapeHtml(p.name)+'" onerror="this.remove();this.parentElement.innerHTML=\'<span class=&quot;image-fallback&quot;>🌿</span>\'">':'<span class="image-fallback">🌿</span>')+'</div><div><p class="catalog-eyebrow">'+escapeHtml(p.family||'BOTANICAL SPECIES')+'</p><h2 id="plant-detail-title">'+escapeHtml(p.name)+'</h2><p>'+escapeHtml(p.rarity||'Rarity not recorded')+' · '+escapeHtml(p.difficulty||'Difficulty not recorded')+'</p></div></div><p class="detail-description">'+escapeHtml(p.summary||'No species description has been added yet.')+'</p><div class="detail-fields"><div class="detail-field"><span>Light</span><strong>'+escapeHtml(p.light||'Not recorded')+'</strong></div><div class="detail-field"><span>Humidity</span><strong>'+escapeHtml(p.humidity||'Not recorded')+'</strong></div><div class="detail-field"><span>Water</span><strong>'+escapeHtml(p.water||'Not recorded')+'</strong></div><div class="detail-field"><span>Family</span><strong>'+escapeHtml(p.family||'Not recorded')+'</strong></div></div><h3 style="font:20px Georgia,serif;color:#efdfae;margin:22px 0 12px">Recorded traits</h3><div class="trait-list">'+(traits.length?traits.map(t=>'<span>'+escapeHtml(t)+'</span>').join(''):'<span>Traits not researched yet</span>')+'</div>';
- document.getElementById('plant-detail-modal').classList.add('open');
-}
-document.getElementById('detail-close').addEventListener('click',()=>document.getElementById('plant-detail-modal').classList.remove('open'));
-document.getElementById('plant-detail-modal').addEventListener('click',event=>{if(event.target.id==='plant-detail-modal')event.currentTarget.classList.remove('open');});
-
-document.getElementById('return-title').addEventListener('click',()=>{document.getElementById('game-screen').classList.remove('active');document.body.style.overflow='hidden';});
-document.querySelectorAll('[data-section]').forEach(button=>button.addEventListener('click',()=>{document.querySelectorAll('[data-section]').forEach(item=>item.classList.remove('selected'));button.classList.add('selected');document.getElementById('section-heading').textContent=button.dataset.section;showToast(button.dataset.section+' screen selected — detailed gameplay is coming next.');}));
-document.querySelectorAll('[data-quick]').forEach(button=>button.addEventListener('click',()=>showToast(button.dataset.quick+' selected — gameplay action will be added next.')));
-document.getElementById('close-modal').addEventListener('click',()=>modal.classList.remove('open'));
-modal.addEventListener('click',event=>{if(event.target===modal)modal.classList.remove('open')});
-document.addEventListener('keydown',event=>{if(event.key==='Escape')modal.classList.remove('open')});
-</script>
-</body>
-</html>
+form.addEventListener('submit',async e=>{e.preventDefault();hideNotice();dashboard.classList.remove('show');const riotId=document.getElementById('riot-id').value.trim(),platform=document.getElementById('platform').value;if(!riotId.includes('#')){showNotice('Enter the full Riot ID in GameName#TAG format.');return}button.disabled=true;button.innerHTML='<span class="loading"></span>Searching';try{const response=await fetch(SUPABASE_URL+'/functions/v1/riot-analytics',{method:'POST',headers:{'Content-Type':'application/json','apikey':SUPABASE_KEY},body:JSON.stringify({riotId,platform,matchCount:10})});const payload=await response.json().catch(()=>({}));if(!response.ok)throw new Error(payload.error||'Request failed ('+response.status+'). Check the Riot API key and Supabase function deployment.');await loadVersion();render(payload,platform);dashboard.scrollIntoView({behavior:'smooth',block:'start'})}catch(err){showNotice(err.message||'Unable to retrieve this account. Please try again.')}finally{button.disabled=false;button.textContent='Search account ↗'}});
+</script></body></html>
