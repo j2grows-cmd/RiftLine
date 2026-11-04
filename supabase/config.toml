@@ -1,0 +1,2 @@
+[functions.riot-analytics]
+verify_jwt = false
